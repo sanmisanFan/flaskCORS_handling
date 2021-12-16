@@ -13,7 +13,8 @@ def test():
         return _build_cors_preflight_response()
     elif request.method == "POST": # The actual request following the preflight
         rawData = request.json
-        print(rawData)
+        print(rawData['modifiedData'])
+        print(rawData['scenarioName'])
         return _corsify_actual_response(jsonify({'msg': 'successful'}))
     else:
         raise RuntimeError("Weird - don't know how to handle method {}".format(request.method))
@@ -30,6 +31,6 @@ def _corsify_actual_response(response):
     return response
 
 if __name__ == '__main__':
-    app.debug = True # 设置调试模式，生产模式的时候要关掉debug
+    app.debug = True
     app.run()
     #app.run(host='0.0.0.0', port=5005, debug=False)
